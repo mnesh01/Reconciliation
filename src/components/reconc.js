@@ -69,6 +69,62 @@ const ReconciliationTool = () => {
   };
 
   return (
+    <div className="container py-5">
+      <div className="card shadow-lg p-4">
+        <h2 className="mb-4 text-center">🧾 Mini Reconciliation Tool</h2>
+
+        <div className="row mb-3">
+          <div className="col-md-6">
+            <label className="form-label fw-bold">Upload Internal CSV</label>
+            <input type="file" className="form-control" accept=".csv" onChange={(e) => handleFileUpload(e, setInternalData)} />
+          </div>
+
+          <div className="col-md-6">
+            <label className="form-label fw-bold">Upload Provider CSV</label>
+            <input type="file" className="form-control" accept=".csv" onChange={(e) => handleFileUpload(e, setProviderData)} />
+          </div>
+        </div>
+
+        <div className="text-center mb-4">
+          <button onClick={reconcile} className="btn btn-primary w-50">🔍 Reconcile</button>
+        </div>
+
+        <div>
+          <h4 className="text-success">✅ Matched Transactions ({matched.length})</h4>
+          <button className="btn btn-outline-success btn-sm mb-2" onClick={() => exportCSV(matched, 'matched.csv')}>Export CSV</button>
+          <ul className="list-group mb-4">
+            {matched.map((tx, idx) => (
+              <li
+                key={idx}
+                className={`list-group-item ${tx._matched ? 'text-success' : 'text-warning fw-bold'}`}
+              >
+                {tx.transaction_reference} - Amount: {tx.amount} vs {tx._providerAmount} | Status: {tx.status} vs {tx._providerStatus}
+              </li>
+            ))}
+          </ul>
+
+          <h4 className="text-warning">⚠️ Internal Only ({internalOnly.length})</h4>
+          <button className="btn btn-outline-warning btn-sm mb-2" onClick={() => exportCSV(internalOnly, 'internal_only.csv')}>Export CSV</button>
+          <ul className="list-group mb-4">
+            {internalOnly.map((tx, idx) => (
+              <li key={idx} className="list-group-item">
+                {tx.transaction_reference} - Amount: {tx.amount}
+              </li>
+            ))}
+          </ul>
+
+          <h4 className="text-danger">❌ Provider Only ({providerOnly.length})</h4>
+          <button className="btn btn-outline-danger btn-sm mb-2" onClick={() => exportCSV(providerOnly, 'provider_only.csv')}>Export CSV</button>
+          <ul className="list-group">
+            {providerOnly.map((tx, idx) => (
+              <li key={idx} className="list-group-item">
+                {tx.transaction_reference} - Amount: {tx.amount}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 };
 
