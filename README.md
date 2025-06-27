@@ -16,14 +16,14 @@ A simple React-based app to compare transactions from two CSV files (internal vs
 ## Tech Stack
 
 - React.js (Create React App)  
-- PapaParse  
-- File‑Saver  
-- Bootstrap  
+- Bootstrap
+- PapaParse-(CSV parsing)
+- FileSaver.js-(CSV download)  
 
 ## Setup & Run
 
 ```bash
-git clone <https://github.com/mnesh01/Reconciliation.git>
+git clone https://github.com/mnesh01/Reconciliation.git
 cd reconc
 npm install
 npm start
